@@ -1,0 +1,15 @@
+$ORIGIN 0.168.192.in-addr.arpa.
+$TTL 86400
+@               IN     SOA      ns.intranet.mes-woodytoys.lab.     aymar.mes-woodytoys.lab. (
+                                2001062501
+                                21600
+                                3600
+                                604800
+                                86400 
+)
+
+@       IN     NS       ns.intranet.mes-woodytoys.lab. ;
+
+2               PTR             resolv.intranet.woodytoys.lab.
+3               PTR             ns.intranet.mes-woodytoys.lab.
+4		        PTR	            samba.intranet.mes-woodytoys.lab.
