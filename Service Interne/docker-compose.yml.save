@@ -1,0 +1,99 @@
+version: "2.2"
+
+services:
+    resolver:
+        build:
+            context: ./resolver
+            dockerfile: Dockerfile
+        networks:
+            local_network:
+                ipv4_address: 192.168.0.2
+        volumes:
+            - ./resolver/named.conf:/etc/bind/named.conf
+        container_name: resolver
+
+    soa:
+        build:
+            context: ./soa
+            dockerfile: Dockerfile
+
+        networks:
+            local_network:
+                ipv4_address: 192.168.0.3
+        ports:
+            - "53:53/tcp"
+            - "53:53/udp"
+        volumes:
+            - ./soa/named.conf:/etc/bind/named.conf
+            - ./soa/intranet.mes-woodytoys.lab:/etc/bind/intranet.mes-woodytoys.lab
+
+        container_name: soa_interne_container
+    samba:
+        build:
+            context: ./samba
+            dockerfile: Dockerfile
+        networks:
+            local_network:
+                ipv4_address: 192.168.0.4
+        ports:
+            - "139:139"
+        container_name: samba
+
+    direction:
+        build:
+            context: ./user
+            dockerfile: Dockerfile
+        networks:
+            local_network:
+                ipv4_address: 192.168.0.5
+        container_name: direction
+
+    compta:
+        build:
+            context: ./user
+            dockerfile: Dockerfile
+        networks:
+            user_network:
+                ipv4_address: 192.168.1.2
+        container_name: compta
+
+    commerciaux:
+        build:
+            context: ./user
+            dockerfile: Dockerfile
+        networks:
+            user_network:
+                ipv4_address: 192.168.1.3
+        container_name: commerciaux
+
+    secretariat:
+        build:
+            context: ./user
+            dockerfile: Dockerfile
+        networks:
+            local_network:
+                ipv4_address: 192.168.0.6
+        container_name: secretariat
+
+    atelier:
+        build:
+            context: ./user
+            dockerfile: Dockerfile
+        networks:
+            user_network:
+                ipv4_address: 192.168.1.4
+        container_name: atelier
+
+networks:
+    local_network:
+        ipam:
+            driver: default
+            config:
+                - subnet: 192.168.0.0/24
+                  gateway: 192.168.0.1
+    user_network:
+        ipam:
+            driver: default
+            config:
+                - subnet: 192.168.1.0/24
+                  gateway: 192.168.1.1

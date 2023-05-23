@@ -1,0 +1,28 @@
+version: "3.3"
+
+services:
+    server_web:
+        build:
+            context: ./web
+            dockerfile: Dockerfile
+        ports:
+            - "80:80"
+            - "443:443"
+        volumes:
+            - ./web/www/:/var/www/
+            - ./web/Sites-available/:/etc/apache2/sites-available/
+            - ./web/apache2.conf:/etc/apache2/apache2.conf
+        container_name: web_container
+
+    database:
+        build:
+            context: ./DB
+            dockerfile: Dockerfile
+        command: --default-authentication-plugin=mysql_native_password
+        ports:
+            - "5000:3306"
+        volumes:
+            - ./DB/db.sql/:/data/
+        environment:
+            MYSQL_ROOT_PASSWORD: MESEPHEC
+        container_name: db-container
