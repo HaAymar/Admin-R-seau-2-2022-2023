@@ -12,4 +12,3 @@ COPY intranet.mes-woodytoys.lab /etc/bind/intranet.mes-woodytoys.lab
 COPY 0.168.192.in-addr.arpa /etc/bind/0.168.192.in-addr.arpa
 
 CMD ["named", "-g"]
-ENTRYPOINT ["tail", "-F" , "/dev/null"]

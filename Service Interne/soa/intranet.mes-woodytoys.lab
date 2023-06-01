@@ -9,7 +9,8 @@ $TTL 86400      ; 1 day
                                 )
 ;
 @               IN      NS      ns.intranet.mes-woodytoys.lab.
-@		IN	A	192.168.0.3
+@		        IN	    A	    192.168.0.3
+
 ns              IN      A       192.168.0.3
 samba           IN      A       192.168.0.4
 resolv		    IN	    A	    192.168.0.2
