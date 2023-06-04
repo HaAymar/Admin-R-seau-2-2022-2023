@@ -9,9 +9,9 @@ RUN apt-get install apache2 -y
 RUN apt-get update -y
 RUN apt-get install -y mutt dnsutils iputils-ping net-tools
 
-COPY /www/b2b/index.php /var/www/b2b/index.php
 COPY /www/html/index.html /var/www/html/index.html
-COPY /sites-available/ /etc/apache2/sites-available
+COPY /sites-available/www.conf /etc/apache2/sites-available
+COPY /sites-available/b2b.conf /etc/apache2/sites-available
 
 RUN apt-get install -y software-properties-common
 RUN apt-get install -y python3-certbot-apache
