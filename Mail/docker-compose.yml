@@ -1,0 +1,17 @@
+version: '2'
+
+services:
+  mail:
+    build: .
+    ports:
+      - "25:25"   #PORT UDP SANS CHIFFREMENT POUR SMTP
+      - "465:465" #PORT UDP AVEC CHIFFREMENT IMPLICITE POUR SMTP
+      - "587:587" #PORT UDP AVEC CHIFFREMENT EXPLICITE POUR SMTP
+      - "143:143" #PORT TCP POUR IMAP (RECEPTION)
+      #- "993:993"
+    #variable d'environnement
+    environment:
+      MYSQL_ROOT_PASSWORD: hypersecurise
+    hostname: mail
+    #rajouter un networks si possible
+    container_name: mail_container
