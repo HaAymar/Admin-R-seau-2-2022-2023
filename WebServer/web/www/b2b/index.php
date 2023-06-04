@@ -1,34 +1,49 @@
 <!DOCTYPE html>
 <html>
 <head>
-</head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
 
+        h1 {
+            color: #333;
+            padding: 20px;
+        }
+
+        h3 {
+            color: #666;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
 <body>
-    <h1>Nous vous souhaitons le bienvenue sur notre site " WoodyToys MMES-4 !</h1>
+    <h1>Nous vous souhaitons le bienvenue sur notre site "WoodyToys MMES-4" !</h1>
+    <h3>Nous vous présentons notre catalogue de jouets</h3>
     <?php
-        echo "<h3> Nous vous presentons notre catalogue de jouet </h3>";
-    ?>
-    <?php
-        $db_host  = "127.0.0.1";
-        $db_user = "WoodyToys";
+        $db_host  = "172.19.0.2";
+        $db_user = "woodytoys";
         $db_name = "db_woody";
         $db_pass = "MESEPHEC";
 
         $mysqli = new mysqli($db_host, $db_user, $db_pass, $db_name);
-        if (mysqli_connect_errno()){
-                echo "Failed to connect to MySQL: " . mysqli_connect_error();
+        // Vérifier la connexion
+        if ($mysqli->connect_errno) {
+            echo "Failed to connect to MySQL: " . $mysqli->connect_error;
         }
-        if ($mysqli -> connect_error) {
-        echo "Refused to connect to MySQL: " . $mysqli -> connect_error;
-        exit();
-        }
-        $query = "SELECT * FROM woody;";
-        $result = mysqli_query($mysqli, $query);
 
-        while ($row = mysqli_fetch_array($result)) {
+        $query = "SELECT * FROM woody";
+        $result = $mysqli->query($query);
+
+        while ($row = $result->fetch_assoc()) {
             echo $row['Name'] . ': '  . $row['Price'] . ' <br />';
         }
     ?>
-
 </body>
 </html>
