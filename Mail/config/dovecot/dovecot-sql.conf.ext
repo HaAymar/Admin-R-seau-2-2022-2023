@@ -1,0 +1,5 @@
+# Config SLQ + requete pour récupérer le password lors d'une connexion
+driver = mysql
+connect = host=127.0.0.1 dbname=mail user=mailUser password=[password]
+default_pass_scheme = SHA512-CRYPT
+password_query = SELECT email as user, password FROM users_table WHERE email='%u'

@@ -1,0 +1,61 @@
+smtpd_banner = $myhostname ESMTP $mail_name (Ubuntu)
+biff = no
+append_dot_mydomain = no
+readme_directory = no
+compatibility_level = 2
+
+# Configuration SSL - Security
+smtp_use_tls=yes
+smtpd_use_tls=yes
+smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
+smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
+
+#A decomenter lorsque le bon certificat est mis en place
+#smtpd_tls_cert_file=/etc/letsencrypt/live/smtp.mmes-4.ephec-ti.be/cert.pem
+#smtpd_tls_key_file=/etc/letsencrypt/live/smtp.mmes-4.ephec-ti.be/privkey.pem
+#smtpd_tls_CApath=/etc/letsencrypt/live/smtp.mmes-4.ephec-ti.be/
+
+#A commenter/supprimer lorsque le bon certificat est mis en place
+smtpd_tls_cert_file=/etc/ssl/certs/mailserver.pem
+smtpd_tls_key_file=/etc/ssl/private/mailserver.pem
+
+
+
+# Configuration SASL
+smtpd_sasl_type = dovecot
+smtpd_sasl_path = private/auth
+smtpd_sasl_auth_enable = yes
+smtp_tls_security_level = may
+smtpd_tls_security_level = may
+smtpd_tls_auth_only = yes
+smtpd_recipient_restrictions = permit_mynetworks permit_sasl_authenticated reject_unauth_destination
+smtpd_sasl_security_options = noanonymous, noplaintext
+smtpd_sasl_tls_security_options = noanonymous
+
+smtpd_helo_restrictions = permit_mynetworks permit_sasl_authenticated reject_invalid_helo_hostname reject_non_fqdn_helo_hostname
+
+# Configuration Postfix
+smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination
+myhostname = mail.mmes-4.ephec-ti.be
+mydomain = mmes-4.ephec-ti.be
+alias_maps = hash:/etc/aliases
+alias_database = hash:/etc/aliases
+myorigin = mmes-4.ephec-ti.be
+mydestination = $myhostname, localhost.localdomain, localhost, localhost.mmes-4.ephec-ti.be
+mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128
+maillog_file = /var/log/postfix.log
+mailbox_size_limit = 0
+recipient_delimiter = +
+inet_interfaces = all
+inet_protocols = all
+virtual_mailbox_domains = mysql:/etc/postfix/mysql-virtual-mailbox-domains.cf
+virtual_mailbox_base = /var/mail/vhosts
+virtual_mailbox_maps = mysql:/etc/postfix/mysql-virtual-mailbox-maps.cf
+virtual_minimum_uid = 100
+virtual_uid_maps = static:5000
+virtual_gid_maps = static:5000
+smtp_generic_maps = hash:/etc/postfix/generic
+
+smtpd_delay_reject = yes
+smtpd_helo_required = yes
+smtp_always_send_ehlo = yes

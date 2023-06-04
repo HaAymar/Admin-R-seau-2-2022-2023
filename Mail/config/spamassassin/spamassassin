@@ -1,0 +1,6 @@
+# Config de spamassassin
+ENABLED=1
+SAHOME="/var/log/spamassassin/"
+OPTIONS="--create-prefs --max-children 5 --helper-home-dir --username spamd -H ${SAHOME} -s ${SAHOME}spamd.log"
+PIDFILE="/var/run/spamd.pid"
+CRON=1

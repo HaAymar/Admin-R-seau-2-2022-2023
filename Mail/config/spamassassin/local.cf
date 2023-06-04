@@ -1,0 +1,2 @@
+rewrite_header Subject [***** SPAM _SCORE_ *****]
+required_score 4.0

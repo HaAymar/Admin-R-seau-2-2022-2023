@@ -1,0 +1,7 @@
+#Information de connection a la DB et requete pour le récupérer le domaine virtuel utilisé
+user = mailUser
+password = [password]
+hosts = 127.0.0.1
+dbname = mail
+query = SELECT 1 FROM domains_table WHERE name='%s'
+

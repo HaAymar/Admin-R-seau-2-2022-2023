@@ -1,0 +1,6 @@
+#information de connection a la db et requete SLQ pour récupérer les maildir
+user = mailUser
+password = [password]
+hosts = 127.0.0.1
+dbname = mail
+query = SELECT maildir FROM users_table WHERE email='%s'
